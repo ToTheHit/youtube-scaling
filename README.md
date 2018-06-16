@@ -1,0 +1,3 @@
+# youtube-scaling
+Source code of extansion for Google Chrome.
+With this extansion you can choose the scale of the video on YouTube (2:1, 16:9, 21:9)
