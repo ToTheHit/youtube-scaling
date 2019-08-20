@@ -1,25 +1,32 @@
 {
   "manifest_version": 2,
-
   "name": "Youtube scaling",
   "description": "[Description]",
   "version": "1.0",
-
   "icons": {
     "48": "icon.png"
   },
-
   "permissions": [
-    "tabs", "<all_urls>"
+    "tabs",
+    "<all_urls>"
   ],
-  
+  "web_accessible_resources": [
+    "css/style.css"
+  ],
   "content_scripts": [
-	{
-		"matches": ["http://www.youtube.com/*","https://www.youtube.com/*"],
-		"js": ["background.js"]
-	}
+    {
+      "matches": [
+        "http://www.youtube.com/*",
+        "https://www.youtube.com/*"
+      ],
+      "js": [
+        "background.js"
+      ],
+      "css": [
+        "yt-scale.css"
+      ]
+    }
   ],
-
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html"

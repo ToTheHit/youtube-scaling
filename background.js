@@ -1,29 +1,49 @@
+const maxScaleLevel = 33;
+
 window.onload = (function() {
-	var button = document.createElement('button');
-	button.id = "yt-scale-test";
-	button.className = "ytp-button";
-	button.onclick = function() {
-		
-		var transform = document.getElementsByClassName('video-stream html5-main-video')[0].style.transform;
-		if (transform === '') {
-			document.getElementsByClassName('video-stream html5-main-video')[0].style.transform = "scale(1.158)";
+	let element =  document.getElementsByClassName('video-stream html5-main-video')[0];
+	let bFindClass = false;
+	element.classList.forEach(_class => {
+		if (_class.includes('yt-scale')) {
+			bFindClass = true;
 		}
-		else {
-			switch(transform.split('scale(')[1].split(')')[0]) {
-				case "1.158":
-					document.getElementsByClassName('video-stream html5-main-video')[0].style.transform = "scale(1.349)";
-					break;
-				case "1.349":
-					document.getElementsByClassName('video-stream html5-main-video')[0].style.transform = "";
-					break;
-				default:
-					break;
-			}
+	});
+	if (!bFindClass) element.classList.add('yt-scale_0');
+
+	document.addEventListener('keydown', function(event) {
+		if (event.code === 'NumpadAdd') {
+			element.classList.forEach(_class => {
+				if (_class.includes('yt-scale')) {
+					element.classList.remove(_class);
+					if (parseInt(_class.split('_')[1]) === maxScaleLevel) {
+						element.classList.add('yt-scale_0');
+					}
+					else {
+						element.classList.add('yt-scale_' + (parseInt(_class.split('_')[1]) + 1));
+					}
+				}
+			})
 		}
-	}
-	
-	button.insertAdjacentHTML('beforeend',
-	'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50 50" version="1.1" style="transform: scale(0.6);"> <g id="surface1" style="fill: rgb(255,255,255);"> <path style=" " d="M 2 6 L 2 24 L 28 24 L 28 6 Z M 30 6 L 30 8 L 36 8 L 36 32 L 4 32 L 4 26 L 2 26 L 2 34 L 38 34 L 38 6 Z M 40 6 L 40 8 L 46 8 L 46 42 L 4 42 L 4 36 L 2 36 L 2 44 L 48 44 L 48 6 Z "></path> </g> </svg>');
-	
-	document.getElementsByClassName('ytp-right-controls')[0].insertBefore(button, document.getElementsByClassName('ytp-right-controls')[0].firstChild);
+		if (event.code === 'NumpadSubtract') {
+			element.classList.forEach(_class => {
+				if (_class.includes('yt-scale')) {
+					element.classList.remove(_class);
+					if (parseInt(_class.split('_')[1]) === 0) {
+						element.classList.add('yt-scale_'+maxScaleLevel);
+					}
+					else {
+						element.classList.add('yt-scale_' + (parseInt(_class.split('_')[1]) - 1));
+					}
+				}
+			})
+		}
+		if (event.code === 'NumpadMultiply') {
+			element.classList.forEach(_class => {
+				if (_class.includes('yt-scale')) {
+					element.classList.remove(_class);
+					element.classList.add('yt-scale_0');
+				}
+			})
+		}
+	});
 });
